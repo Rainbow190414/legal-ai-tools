@@ -1,0 +1,69 @@
+import { Routes, Route } from 'react-router-dom'
+import Layout from './components/Layout'
+import Home from './pages/Home'
+import ContractReview from './pages/ContractReview'
+import FileDesensitize from './pages/FileDesensitize'
+import MeetingToPlan from './pages/MeetingToPlan'
+import CaseReading from './pages/CaseReading'
+import LegalDocGen from './pages/LegalDocGen'
+import NdaTriage from './pages/NdaTriage'
+import RiskAssessment from './pages/RiskAssessment'
+import MeetingBriefing from './pages/MeetingBriefing'
+import TranscriptOrganizer from './pages/TranscriptOrganizer'
+import Compliance from './pages/Compliance'
+import CannedResponses from './pages/CannedResponses'
+import Settings from './pages/Settings'
+
+// 计算工具
+import InterestCalculator from './pages/InterestCalculator'
+import LitigationFeeCalculator from './pages/LitigationFeeCalculator'
+import PenaltyCalculator from './pages/PenaltyCalculator'
+import StatuteOfLimitations from './pages/StatuteOfLimitations'
+
+// 文件与图片管理
+import ImageStitch from './pages/ImageStitch'
+import ImageWatermark from './pages/ImageWatermark'
+import PdfToImage from './pages/PdfToImage'
+
+// 案件管理
+import CaseManager from './pages/CaseManager'
+import CaseDetail from './pages/CaseDetail'
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="contract-review" element={<ContractReview />} />
+        <Route path="nda-triage" element={<NdaTriage />} />
+        <Route path="file-desensitize" element={<FileDesensitize />} />
+        <Route path="meeting-to-plan" element={<MeetingToPlan />} />
+        <Route path="meeting-briefing" element={<MeetingBriefing />} />
+        <Route path="case-reading" element={<CaseReading />} />
+        <Route path="transcript-organizer" element={<TranscriptOrganizer />} />
+        <Route path="legal-doc-gen" element={<LegalDocGen />} />
+        <Route path="risk-assessment" element={<RiskAssessment />} />
+        <Route path="compliance" element={<Compliance />} />
+        <Route path="canned-responses" element={<CannedResponses />} />
+        <Route path="settings" element={<Settings />} />
+        
+        {/* 计算工具 */}
+        <Route path="interest-calc" element={<InterestCalculator />} />
+        <Route path="litigation-fee" element={<LitigationFeeCalculator />} />
+        <Route path="penalty-calc" element={<PenaltyCalculator />} />
+        <Route path="statute-limitations" element={<StatuteOfLimitations />} />
+        
+        {/* 文件与图片管理 */}
+        <Route path="image-stitch" element={<ImageStitch />} />
+        <Route path="image-watermark" element={<ImageWatermark />} />
+        <Route path="pdf-to-image" element={<PdfToImage />} />
+        
+        {/* 案件管理 */}
+        <Route path="case-manager" element={<CaseManager />} />
+        <Route path="case/:id" element={<CaseDetail />} />
+      </Route>
+    </Routes>
+  )
+}
+
+export default App

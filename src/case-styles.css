@@ -1,0 +1,505 @@
+/* ==================== 案件档案管理样式 ==================== */
+
+/* 案件管理入口 */
+.case-manager-entry {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 8px;
+}
+
+.case-manager-entry:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.case-entry-icon {
+  font-size: 40px;
+  flex-shrink: 0;
+}
+
+.case-entry-info {
+  flex: 1;
+}
+
+.case-entry-info h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.case-entry-info p {
+  font-size: 13px;
+  opacity: 0.85;
+  margin: 0;
+}
+
+.case-entry-arrow {
+  font-size: 24px;
+  opacity: 0.7;
+}
+
+/* 统计栏 */
+.case-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.stat-number {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #718096;
+  margin-top: 4px;
+}
+
+/* 案件操作栏 */
+.case-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+/* 案件列表 */
+.case-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.case-card {
+  background: white;
+  border-radius: 10px;
+  padding: 16px 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s;
+}
+
+.case-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.case-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.case-card-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #2d3748;
+  text-decoration: none;
+}
+
+.case-card-title:hover {
+  color: #4299e1;
+}
+
+.case-status {
+  font-size: 12px;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.status-active {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.status-closed {
+  background: #e2e8f0;
+  color: #4a5568;
+}
+
+.status-paused {
+  background: #fefcbf;
+  color: #744210;
+}
+
+.case-card-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: #a0aec0;
+  margin-bottom: 6px;
+}
+
+.case-type {
+  background: #edf2f7;
+  padding: 1px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.case-card-parties {
+  font-size: 13px;
+  color: #4a5568;
+  margin-bottom: 4px;
+}
+
+.case-card-desc {
+  font-size: 13px;
+  color: #718096;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.case-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid #edf2f7;
+}
+
+.case-card-info {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: #a0aec0;
+}
+
+.case-card-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.confirm-delete {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #e53e3e;
+}
+
+.btn-danger {
+  color: #e53e3e !important;
+  border-color: #feb2b2 !important;
+}
+
+.btn-danger:hover {
+  background: #fff5f5 !important;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: #a0aec0;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.empty-hint {
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* 弹窗 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+  color: #2d3748;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* 案件信息卡片 */
+.case-info-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.case-info-display {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.case-info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.case-info-label {
+  color: #a0aec0;
+  flex-shrink: 0;
+  min-width: 70px;
+}
+
+.case-info-value {
+  color: #2d3748;
+  flex: 1;
+}
+
+.case-info-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #edf2f7;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* 标签页 */
+.case-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #edf2f7;
+  margin-bottom: 20px;
+}
+
+.case-tab {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  font-size: 14px;
+  color: #718096;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.case-tab:hover {
+  color: #4a5568;
+}
+
+.case-tab.active {
+  color: #4299e1;
+  border-bottom-color: #4299e1;
+  font-weight: 600;
+}
+
+.case-tab-content {
+  min-height: 200px;
+}
+
+/* 补充信息 */
+.note-input-area {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.note-input-area .btn {
+  align-self: flex-end;
+}
+
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.note-item {
+  background: #f7fafc;
+  border-radius: 8px;
+  padding: 12px 16px;
+  border-left: 3px solid #4299e1;
+}
+
+.note-time {
+  font-size: 12px;
+  color: #a0aec0;
+  margin-bottom: 4px;
+}
+
+.note-content {
+  font-size: 14px;
+  color: #2d3748;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* 案件摘要 */
+.summary-content {
+  background: #f7fafc;
+  border-radius: 10px;
+  padding: 20px;
+  line-height: 1.8;
+  color: #2d3748;
+  font-size: 14px;
+}
+
+.summary-actions {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* 文件上传区 */
+.file-upload {
+  border: 2px dashed #cbd5e0;
+  border-radius: 10px;
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 16px;
+}
+
+.file-upload:hover,
+.file-upload.dragover {
+  border-color: #4299e1;
+  background: #ebf8ff;
+}
+
+.upload-icon {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.file-upload p {
+  margin: 4px 0;
+  color: #4a5568;
+}
+
+.upload-hint {
+  font-size: 12px !important;
+  color: #a0aec0 !important;
+}
+
+/* 文件列表 */
+.file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #f7fafc;
+  border-radius: 8px;
+}
+
+.file-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.file-item-name {
+  font-size: 14px;
+  color: #2d3748;
+}
+
+.file-item-meta {
+  font-size: 12px;
+  color: #a0aec0;
+}
+
+/* 页面容器 */
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 响应式 */
+@media (max-width: 640px) {
+  .case-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .stat-number {
+    font-size: 22px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .case-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .case-info-actions {
+    flex-wrap: wrap;
+  }
+
+  .case-tabs {
+    overflow-x: auto;
+  }
+
+  .case-tab {
+    white-space: nowrap;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+}

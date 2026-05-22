@@ -1,0 +1,339 @@
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 59 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+node:events:486
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: read EIO
+    at TTY.onStreamRead (node:internal/stream_base_commons:216:20)
+Emitted 'error' event on Interface instance at:
+    at ReadStream.onerror (node:internal/readline/interface:259:10)
+    at ReadStream.emit (node:events:508:28)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  errno: -5,
+  code: 'EIO',
+  syscall: 'read'
+}
+
+Node.js v24.14.1
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 353 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+1:46:21 AM [vite] (client) hmr update /src/components/FileUpload.jsx
+1:46:28 AM [vite] (client) hmr update /src/pages/CaseReading.jsx
+1:46:28 AM [vite] (client) hmr update /src/pages/Home.jsx
+1:46:28 AM [vite] (client) hmr update /src/pages/Compliance.jsx
+1:46:28 AM [vite] (client) hmr update /src/pages/FileDesensitize.jsx
+1:46:28 AM [vite] (client) hmr update /src/pages/MeetingToPlan.jsx
+1:46:28 AM [vite] (client) hmr update /src/pages/RiskAssessment.jsx
+1:46:28 AM [vite] (client) hmr update /src/pages/CannedResponses.jsx
+1:46:28 AM [vite] (client) hmr update /src/pages/TranscriptOrganizer.jsx
+1:46:28 AM [vite] (client) hmr update /src/pages/MeetingBriefing.jsx
+1:46:28 AM [vite] (client) hmr update /src/pages/NdaTriage.jsx
+1:46:28 AM [vite] (client) hmr update /src/pages/Settings.jsx
+1:46:28 AM [vite] (client) hmr update /src/pages/LegalDocGen.jsx
+1:46:28 AM [vite] (client) hmr update /src/pages/ContractReview.jsx
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+1:46:34 AM [vite] (client) Re-optimizing dependencies because lockfile has changed
+
+  VITE v8.0.13  ready in 351 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 56 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 55 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+2:06:59 AM [vite] (client) hmr update /src/components/FileUpload.jsx
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 75 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 77 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+2:12:29 AM [vite] (client) hmr update /src/components/FileUpload.jsx
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 57 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+2:53:50 AM [vite] (client) hmr update /src/index.css
+2:59:26 AM [vite] (client) hmr update /src/index.css
+2:59:48 AM [vite] (client) hmr update /src/index.css
+3:08:00 AM [vite] (client) hmr update /src/index.css
+3:12:00 AM [vite] (client) hmr update /src/index.css
+3:12:21 AM [vite] (client) hmr update /src/index.css
+3:17:29 AM [vite] (client) hmr update /src/index.css
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 78 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 56 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+3:27:48 AM [vite] (client) hmr update /src/index.css
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 57 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 69 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+3:31:02 AM [vite] (client) hmr update /src/index.css
+3:41:18 AM [vite] (client) hmr update /src/index.css
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 81 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 56 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 56 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+4:19:29 AM [vite] (client) hmr update /src/index.css
+4:20:51 AM [vite] (client) hmr update /src/index.css
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 59 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 61 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 80 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 75 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+12:29:58 AM [vite] (client) hmr update /src/index.css
+12:54:56 AM [vite] (client) hmr update /src/pages/Home.jsx
+12:54:56 AM [vite] (client) hmr update /src/index.css
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 98 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+12:58:03 AM [vite] (client) hmr update /src/App.jsx
+1:08:09 AM [vite] (client) hmr update /src/pages/LitigationFeeCalculator.jsx
+1:08:09 AM [vite] (client) hmr update /src/pages/InterestCalculator.jsx
+1:08:09 AM [vite] (client) hmr update /src/pages/PenaltyCalculator.jsx
+1:08:09 AM [vite] (client) hmr update /src/pages/StatuteOfLimitations.jsx
+1:20:14 AM [vite] (client) page reload src/main.jsx
+1:29:36 AM [vite] .env.local changed, restarting server...
+1:29:36 AM [vite] .env.local changed, restarting server...
+1:29:36 AM [vite] server restarted.
+2:42:43 AM [vite] vite.config.js changed, restarting server...
+2:42:43 AM [vite] server restarted.
+4:30:11 AM [vite] (client) hmr update /src/pages/Home.jsx
+4:30:11 AM [vite] (client) hmr update /src/App.jsx
+4:30:11 AM [vite] (client) page reload src/main.jsx
+4:31:11 AM [vite] (client) hmr update /src/context/CaseContext.jsx, /src/pages/CaseDetail.jsx
+4:31:11 AM [vite] (client) hmr update /src/context/CaseContext.jsx
+4:31:11 AM [vite] (client) hmr update /src/pages/CaseManager.jsx
+4:31:11 AM [vite] (client) hmr update /src/pages/CaseDetail.jsx
+4:31:11 AM [vite] (client) hmr update /src/pages/Home.jsx
+4:31:11 AM [vite] (client) hmr update /src/App.jsx
+4:31:11 AM [vite] (client) page reload src/main.jsx
+4:31:11 AM [vite] (client) hmr update /src/case-styles.css
+4:33:32 AM [vite] (client) hmr update /src/pages/Home.jsx
+4:33:32 AM [vite] (client) hmr update /src/App.jsx
+12:07:39 AM [vite] (client) hmr update /src/context/SessionContext.jsx
+12:07:39 AM [vite] (client) hmr update /src/pages/CaseManager.jsx
+12:07:39 AM [vite] (client) hmr update /src/pages/CaseDetail.jsx
+12:28:37 AM [vite] (client) hmr update /src/pages/ContractReview.jsx, /src/pages/LegalDocGen.jsx, /src/pages/FileDesensitize.jsx, /src/pages/MeetingToPlan.jsx, /src/pages/TranscriptOrganizer.jsx, /src/pages/NdaTriage.jsx, /src/pages/RiskAssessment.jsx, /src/pages/MeetingBriefing.jsx, /src/pages/Compliance.jsx, /src/pages/CannedResponses.jsx, /src/pages/CaseReading.jsx
+12:28:37 AM [vite] (client) hmr update /src/pages/Settings.jsx
+12:28:37 AM [vite] (client) hmr update /src/pages/CaseDetail.jsx
+12:39:48 AM [vite] (client) hmr update /src/pages/ContractReview.jsx, /src/pages/LegalDocGen.jsx, /src/pages/FileDesensitize.jsx, /src/pages/MeetingToPlan.jsx, /src/pages/TranscriptOrganizer.jsx, /src/pages/NdaTriage.jsx, /src/pages/RiskAssessment.jsx, /src/pages/MeetingBriefing.jsx, /src/pages/Compliance.jsx, /src/pages/CannedResponses.jsx, /src/pages/CaseReading.jsx, /src/pages/Settings.jsx
+12:39:48 AM [vite] (client) hmr update /src/pages/Settings.jsx
+12:39:48 AM [vite] (client) hmr update /src/pages/CaseDetail.jsx
+12:40:55 AM [vite] (client) hmr update /src/pages/ContractReview.jsx, /src/pages/LegalDocGen.jsx, /src/pages/FileDesensitize.jsx, /src/pages/MeetingToPlan.jsx, /src/pages/TranscriptOrganizer.jsx, /src/pages/NdaTriage.jsx, /src/pages/RiskAssessment.jsx, /src/pages/MeetingBriefing.jsx, /src/pages/Compliance.jsx, /src/pages/CannedResponses.jsx, /src/pages/CaseReading.jsx, /src/pages/Settings.jsx
+12:40:55 AM [vite] (client) hmr update /src/pages/Settings.jsx
+12:40:55 AM [vite] (client) hmr update /src/pages/CaseDetail.jsx
+12:49:41 AM [vite] (client) hmr update /src/pages/Settings.jsx
+12:49:41 AM [vite] (client) hmr update /src/pages/CaseDetail.jsx
+12:49:41 AM [vite] (client) hmr update /src/context/CaseContext.jsx, /src/pages/CaseDetail.jsx
+12:49:41 AM [vite] (client) hmr update /src/case-styles.css
+12:57:06 AM [vite] (client) hmr update /src/pages/Settings.jsx
+12:57:06 AM [vite] (client) hmr update /src/pages/CaseDetail.jsx
+12:57:06 AM [vite] (client) hmr update /src/context/CaseContext.jsx, /src/pages/CaseDetail.jsx
+12:57:06 AM [vite] (client) hmr update /src/case-styles.css
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+Port 5173 is in use, trying another one...
+
+  VITE v8.0.13  ready in 158 ms
+
+  ➜  Local:   http://localhost:5174/
+  ➜  Network: use --host to expose
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 81 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+1:43:19 AM [vite] (client) hmr update /src/pages/Settings.jsx
+1:43:28 AM [vite] (client) hmr update /src/pages/MeetingToPlan.jsx, /src/pages/FileDesensitize.jsx, /src/pages/ContractReview.jsx, /src/pages/CaseReading.jsx, /src/pages/TranscriptOrganizer.jsx, /src/pages/LegalDocGen.jsx, /src/pages/RiskAssessment.jsx, /src/pages/MeetingBriefing.jsx, /src/pages/NdaTriage.jsx, /src/pages/Compliance.jsx, /src/pages/CannedResponses.jsx
+1:49:18 AM [vite] (client) hmr update /src/index.css
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+Port 5173 is in use, trying another one...
+
+  VITE v8.0.13  ready in 106 ms
+
+  ➜  Local:   http://localhost:5174/
+  ➜  Network: use --host to expose
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+Port 5173 is in use, trying another one...
+Port 5174 is in use, trying another one...
+
+  VITE v8.0.13  ready in 65 ms
+
+  ➜  Local:   http://localhost:5175/
+  ➜  Network: use --host to expose
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+Port 5173 is in use, trying another one...
+
+  VITE v8.0.13  ready in 64 ms
+
+  ➜  Local:   http://localhost:5174/
+  ➜  Network: use --host to expose
+2:07:47 AM [vite] vite.config.js changed, restarting server...
+2:07:47 AM [vite] server restarted.
+
+> legal-ai-tools@1.0.0 dev
+> vite
+
+
+  VITE v8.0.13  ready in 96 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose

@@ -1,0 +1,250 @@
+// 案件档案数据库 - 基于 IndexedDB
+const DB_NAME = 'LegalCaseDB'
+const DB_VERSION = 1
+const CASE_STORE = 'cases'
+const FILE_STORE = 'caseFiles'
+
+let db = null
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    if (db) return resolve(db)
+    const request = indexedDB.open(DB_NAME, DB_VERSION)
+    request.onerror = () => reject(request.error)
+    request.onsuccess = () => {
+      db = request.result
+      resolve(db)
+    }
+    request.onupgradeneeded = (e) => {
+      const database = e.target.result
+      if (!database.objectStoreNames.contains(CASE_STORE)) {
+        const caseStore = database.createObjectStore(CASE_STORE, { keyPath: 'id' })
+        caseStore.createIndex('name', 'name', { unique: false })
+        caseStore.createIndex('createdAt', 'createdAt', { unique: false })
+        caseStore.createIndex('updatedAt', 'updatedAt', { unique: false })
+      }
+      if (!database.objectStoreNames.contains(FILE_STORE)) {
+        const fileStore = database.createObjectStore(FILE_STORE, { keyPath: 'id' })
+        fileStore.createIndex('caseId', 'caseId', { unique: false })
+      }
+    }
+  })
+}
+
+export async function createCase(caseData) {
+  const database = await openDB()
+  return new Promise((resolve, reject) => {
+    const tx = database.transaction(CASE_STORE, 'readwrite')
+    const store = tx.objectStore(CASE_STORE)
+    const newCase = {
+      id: 'case_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+      name: caseData.name || '未命名案件',
+      type: caseData.type || '民事案件',
+      description: caseData.description || '',
+      summary: '',
+      parties: caseData.parties || '',
+      status: '进行中',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      notes: [],
+      fileCount: 0,
+    }
+    const request = store.add(newCase)
+    request.onsuccess = () => resolve(newCase)
+    request.onerror = () => reject(request.error)
+  })
+}
+
+export async function getAllCases() {
+  const database = await openDB()
+  return new Promise((resolve, reject) => {
+    const tx = database.transaction(CASE_STORE, 'readonly')
+    const store = tx.objectStore(CASE_STORE)
+    const request = store.getAll()
+    request.onsuccess = () => {
+      const cases = request.result.sort((a, b) =>
+        new Date(b.updatedAt) - new Date(a.updatedAt)
+      )
+      resolve(cases)
+    }
+    request.onerror = () => reject(request.error)
+  })
+}
+
+export async function getCaseById(id) {
+  const database = await openDB()
+  return new Promise((resolve, reject) => {
+    const tx = database.transaction(CASE_STORE, 'readonly')
+    const store = tx.objectStore(CASE_STORE)
+    const request = store.get(id)
+    request.onsuccess = () => resolve(request.result)
+    request.onerror = () => reject(request.error)
+  })
+}
+
+export async function updateCase(id, updates) {
+  const database = await openDB()
+  return new Promise((resolve, reject) => {
+    const tx = database.transaction(CASE_STORE, 'readwrite')
+    const store = tx.objectStore(CASE_STORE)
+    const getReq = store.get(id)
+    getReq.onsuccess = () => {
+      const caseData = { ...getReq.result, ...updates, updatedAt: new Date().toISOString() }
+      const putReq = store.put(caseData)
+      putReq.onsuccess = () => resolve(caseData)
+      putReq.onerror = () => reject(putReq.error)
+    }
+    getReq.onerror = () => reject(getReq.error)
+  })
+}
+
+export async function deleteCase(id) {
+  const database = await openDB()
+  return new Promise(async (resolve, reject) => {
+    try {
+      const files = await getCaseFiles(id)
+      const fileTx = database.transaction(FILE_STORE, 'readwrite')
+      const fileStore = fileTx.objectStore(FILE_STORE)
+      for (const file of files) {
+        fileStore.delete(file.id)
+      }
+      const caseTx = database.transaction(CASE_STORE, 'readwrite')
+      const caseStore = caseTx.objectStore(CASE_STORE)
+      const request = caseStore.delete(id)
+      request.onsuccess = () => resolve()
+      request.onerror = () => reject(request.error)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
+
+export async function addCaseNote(caseId, content) {
+  const caseData = await getCaseById(caseId)
+  if (!caseData) throw new Error('案件不存在')
+  const note = {
+    id: 'note_' + Date.now(),
+    content,
+    createdAt: new Date().toISOString(),
+  }
+  const notes = [...(caseData.notes || []), note]
+  return updateCase(caseId, { notes })
+}
+
+export async function deleteCaseNote(caseId, noteId) {
+  const caseData = await getCaseById(caseId)
+  if (!caseData) throw new Error('案件不存在')
+  const notes = (caseData.notes || []).filter(n => n.id !== noteId)
+  return updateCase(caseId, { notes })
+}
+
+export async function updateCaseSummary(caseId, summary) {
+  return updateCase(caseId, { summary })
+}
+
+export async function addCaseFile(caseId, file) {
+  const database = await openDB()
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = async () => {
+      const fileData = {
+        id: 'file_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+        caseId,
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        data: reader.result,
+        uploadedAt: new Date().toISOString(),
+      }
+      const tx = database.transaction(FILE_STORE, 'readwrite')
+      const store = tx.objectStore(FILE_STORE)
+      const request = store.add(fileData)
+      request.onsuccess = async () => {
+        const files = await getCaseFiles(caseId)
+        await updateCase(caseId, { fileCount: files.length })
+        resolve(fileData)
+      }
+      request.onerror = () => reject(request.error)
+    }
+    reader.onerror = () => reject(reader.error)
+    reader.readAsArrayBuffer(file)
+  })
+}
+
+export async function getCaseFiles(caseId) {
+  const database = await openDB()
+  return new Promise((resolve, reject) => {
+    const tx = database.transaction(FILE_STORE, 'readonly')
+    const store = tx.objectStore(FILE_STORE)
+    const index = store.index('caseId')
+    const request = index.getAll(caseId)
+    request.onsuccess = () => {
+      const files = request.result.sort((a, b) =>
+        new Date(a.uploadedAt) - new Date(b.uploadedAt)
+      )
+      resolve(files)
+    }
+    request.onerror = () => reject(request.error)
+  })
+}
+
+export async function deleteCaseFile(fileId, caseId) {
+  const database = await openDB()
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tx = database.transaction(FILE_STORE, 'readwrite')
+      const store = tx.objectStore(FILE_STORE)
+      const request = store.delete(fileId)
+      request.onsuccess = async () => {
+        const files = await getCaseFiles(caseId)
+        await updateCase(caseId, { fileCount: files.length })
+        resolve()
+      }
+      request.onerror = () => reject(request.error)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
+
+export async function exportCaseData(caseId) {
+  const caseData = await getCaseById(caseId)
+  const files = await getCaseFiles(caseId)
+  return {
+    case: caseData,
+    files: files.map(f => ({
+      name: f.name,
+      type: f.type,
+      size: f.size,
+      uploadedAt: f.uploadedAt,
+      data: f.data,
+    })),
+    exportedAt: new Date().toISOString(),
+  }
+}
+
+export async function getCaseContext(caseId) {
+  const caseData = await getCaseById(caseId)
+  if (!caseData) return null
+
+  let context = `【案件信息】\n`
+  context += `案件名称：${caseData.name}\n`
+  context += `案件类型：${caseData.type}\n`
+  if (caseData.parties) context += `当事人：${caseData.parties}\n`
+  if (caseData.description) context += `案件描述：${caseData.description}\n`
+  context += `案件状态：${caseData.status}\n`
+
+  if (caseData.summary) {
+    context += `\n【案件摘要】\n${caseData.summary}\n`
+  }
+
+  if (caseData.notes && caseData.notes.length > 0) {
+    context += `\n【案件进展】\n`
+    caseData.notes.forEach((note, i) => {
+      const date = new Date(note.createdAt).toLocaleString('zh-CN')
+      context += `${i + 1}. [${date}] ${note.content}\n`
+    })
+  }
+
+  return context
+}
