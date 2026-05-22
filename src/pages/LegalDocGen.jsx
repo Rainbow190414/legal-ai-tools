@@ -34,7 +34,7 @@ function LegalDocGen() {
   return (
     <div>
       <div className="page-header">
-        <a href={import.meta.env.BASE_URL}" className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
+        <a href={import.meta.env.BASE_URL} className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
         <h2 className="page-title">法律文书生成</h2>
       </div>
       <DataBridge sourceKey={STORAGE_KEYS.CASE_ANALYSIS} label="案件分析" sourcePath="/case-reading" onAccept={() => setText(existingAnalysis)} onReject={() => { clearData(STORAGE_KEYS.CASE_ANALYSIS); setText('') }} />

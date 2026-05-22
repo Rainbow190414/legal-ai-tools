@@ -31,7 +31,7 @@ function MeetingBriefing() {
   return (
     <div>
       <div className="page-header">
-        <a href={import.meta.env.BASE_URL}" className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
+        <a href={import.meta.env.BASE_URL} className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
         <h2 className="page-title">会议简报</h2>
       </div>
       <DataBridge sourceKey={STORAGE_KEYS.MEETING_NOTES} label="会议纪要" sourcePath="/meeting-to-plan" onAccept={() => setText(existingNotes)} onReject={() => { clearData(STORAGE_KEYS.MEETING_NOTES); setText('') }} />

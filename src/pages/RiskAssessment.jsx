@@ -31,7 +31,7 @@ function RiskAssessment() {
   return (
     <div>
       <div className="page-header">
-        <a href={import.meta.env.BASE_URL}" className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
+        <a href={import.meta.env.BASE_URL} className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
         <h2 className="page-title">法律风险评估</h2>
       </div>
       <DataBridge sourceKey={STORAGE_KEYS.CONTRACT_REVIEW} label="合同审查" sourcePath="/contract-review" onAccept={() => setText(existingContract)} onReject={() => { clearData(STORAGE_KEYS.CONTRACT_REVIEW); setText('') }} />

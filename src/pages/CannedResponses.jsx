@@ -28,7 +28,7 @@ function CannedResponses() {
   return (
     <div>
       <div className="page-header">
-        <a href={import.meta.env.BASE_URL}" className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
+        <a href={import.meta.env.BASE_URL} className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
         <h2 className="page-title">模板回复</h2>
       </div>
       <div className="form-group">

@@ -40,7 +40,7 @@ function TranscriptOrganizer() {
   return (
     <div>
       <div className="page-header">
-        <a href={import.meta.env.BASE_URL}" className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
+        <a href={import.meta.env.BASE_URL} className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
         <h2 className="page-title">笔录整理</h2>
       </div>
       <DataBridge sourceKey={STORAGE_KEYS.CASE_MATERIALS} label="案件卷宗阅读" sourcePath="/case-reading" onAccept={() => setText(existingMaterials)} onReject={() => { clearData(STORAGE_KEYS.CASE_MATERIALS); setText('') }} />
