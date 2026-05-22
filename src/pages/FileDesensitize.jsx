@@ -73,7 +73,7 @@ function FileDesensitize() {
   return (
     <div>
       <div className="page-header">
-        <a href="/" className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
+        <a href={import.meta.env.BASE_URL}" className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
         <h2 className="page-title">文件脱敏</h2>
       </div>
 
@@ -116,7 +116,7 @@ function FileDesensitize() {
         </div>
       </div>
 
-      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href="/settings">前往设置</a></> : error}</div>}
+      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL}settings">前往设置</a></> : error}</div>}
 
       <button className="btn btn-primary" onClick={handleSubmit} disabled={loading} style={{ marginTop: '16px' }}>
         {loading ? '处理中...' : '开始脱敏'}

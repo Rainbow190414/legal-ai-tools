@@ -28,7 +28,7 @@ function CannedResponses() {
   return (
     <div>
       <div className="page-header">
-        <a href="/" className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
+        <a href={import.meta.env.BASE_URL}" className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
         <h2 className="page-title">模板回复</h2>
       </div>
       <div className="form-group">
@@ -41,7 +41,7 @@ function CannedResponses() {
         <label className="form-label">场景描述：</label>
         <textarea className="form-textarea" placeholder="请描述需要回复的场景，例如：收到客户的删除请求，需要在GDPR框架下响应..." value={text} onChange={(e) => setText(e.target.value)} />
       </div>
-      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href="/settings">前往设置</a></> : error}</div>}
+      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL}settings">前往设置</a></> : error}</div>}
       <button className="btn btn-primary" onClick={handleSubmit} disabled={loading}>{loading ? '生成中...' : '生成回复'}</button>
       {loading && <div className="loading"><div className="spinner"></div><span>正在生成...</span></div>}
       {result && (

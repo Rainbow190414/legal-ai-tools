@@ -31,7 +31,7 @@ function MeetingBriefing() {
   return (
     <div>
       <div className="page-header">
-        <a href="/" className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
+        <a href={import.meta.env.BASE_URL}" className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
         <h2 className="page-title">会议简报</h2>
       </div>
       <DataBridge sourceKey={STORAGE_KEYS.MEETING_NOTES} label="会议纪要" sourcePath="/meeting-to-plan" onAccept={() => setText(existingNotes)} onReject={() => { clearData(STORAGE_KEYS.MEETING_NOTES); setText('') }} />
@@ -39,7 +39,7 @@ function MeetingBriefing() {
         <label className="form-label">会议信息：</label>
         <textarea className="form-textarea" placeholder="请输入会议类型、参会人员、议题、相关背景等信息..." value={text} onChange={(e) => setText(e.target.value)} />
       </div>
-      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href="/settings">前往设置</a></> : error}</div>}
+      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL}settings">前往设置</a></> : error}</div>}
       <button className="btn btn-primary" onClick={handleSubmit} disabled={loading}>{loading ? '生成中...' : '生成简报'}</button>
       {loading && <div className="loading"><div className="spinner"></div><span>正在生成...</span></div>}
       {result && (

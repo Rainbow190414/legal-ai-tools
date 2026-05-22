@@ -65,7 +65,7 @@ function ContractReview() {
   return (
     <div>
       <div className="page-header">
-        <a href="/" className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
+        <a href={import.meta.env.BASE_URL}" className="back-btn"><ArrowLeft size={16} /> 返回首页</a>
         <h2 className="page-title">合同审查</h2>
       </div>
 
@@ -91,7 +91,7 @@ function ContractReview() {
 
       {error && (
         <div className="error-message">
-          {error.includes('API Key') ? <>{error} <a href="/settings">前往设置</a></> : error}
+          {error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL}settings">前往设置</a></> : error}
         </div>
       )}
 
