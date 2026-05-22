@@ -54,7 +54,7 @@ function TranscriptOrganizer() {
         <input type="text" className="form-input" placeholder="关键词过滤（可选，多个用逗号分隔）" value={keywords} onChange={(e) => setKeywords(e.target.value)} style={{ marginBottom: '8px' }} />
         <input type="number" className="form-input" placeholder="最大提取数量（可选，留空则不限制）" value={maxQna} onChange={(e) => setMaxQna(e.target.value)} />
       </div>
-      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL}settings">前往设置</a></> : error}</div>}
+      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL + "settings"}>前往设置</a></> : error}</div>}
       <button className="btn btn-primary" onClick={handleSubmit} disabled={loading} style={{ marginTop: '16px' }}>{loading ? '整理中...' : '开始整理'}</button>
       {loading && <div className="loading"><div className="spinner"></div><span>正在整理...</span></div>}
       {result && (

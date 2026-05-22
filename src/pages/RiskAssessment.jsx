@@ -39,7 +39,7 @@ function RiskAssessment() {
         <label className="form-label">待评估内容：</label>
         <textarea className="form-textarea" placeholder="请粘贴合同、案件描述或其他需要风险评估的内容..." value={text} onChange={(e) => setText(e.target.value)} />
       </div>
-      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL}settings">前往设置</a></> : error}</div>}
+      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL + "settings"}>前往设置</a></> : error}</div>}
       <button className="btn btn-primary" onClick={handleSubmit} disabled={loading}>{loading ? '评估中...' : '开始评估'}</button>
       {loading && <div className="loading"><div className="spinner"></div><span>正在评估风险...</span></div>}
       {result && (

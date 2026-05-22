@@ -47,7 +47,7 @@ function Compliance() {
         <label className="form-label">待审查内容：</label>
         <textarea className="form-textarea" placeholder="请粘贴需要审查的文档或描述..." value={text} onChange={(e) => setText(e.target.value)} />
       </div>
-      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL}settings">前往设置</a></> : error}</div>}
+      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL + "settings"}>前往设置</a></> : error}</div>}
       <button className="btn btn-primary" onClick={handleSubmit} disabled={loading} style={{ marginTop: '16px' }}>{loading ? '审查中...' : '开始审查'}</button>
       {loading && <div className="loading"><div className="spinner"></div><span>正在审查...</span></div>}
       {result && (

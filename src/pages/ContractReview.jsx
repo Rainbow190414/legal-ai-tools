@@ -91,7 +91,7 @@ function ContractReview() {
 
       {error && (
         <div className="error-message">
-          {error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL}settings">前往设置</a></> : error}
+          {error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL + "settings"}>前往设置</a></> : error}
         </div>
       )}
 

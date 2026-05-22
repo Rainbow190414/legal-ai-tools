@@ -52,7 +52,7 @@ function CaseReading() {
         <label className="form-label">您想了解的问题（可选）：</label>
         <textarea className="form-textarea" style={{ minHeight: '100px' }} placeholder="例如：被告人的主要辩解是什么？证据链是否完整？" value={question} onChange={(e) => setQuestion(e.target.value)} />
       </div>
-      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL}settings">前往设置</a></> : error}</div>}
+      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL + "settings"}>前往设置</a></> : error}</div>}
       <button className="btn btn-primary" onClick={handleSubmit} disabled={loading} style={{ marginTop: '16px' }}>{loading ? '分析中...' : '开始分析'}</button>
       {loading && <div className="loading"><div className="spinner"></div><span>正在分析案卷...</span></div>}
       {result && (

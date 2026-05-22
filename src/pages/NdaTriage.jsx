@@ -41,7 +41,7 @@ function NdaTriage() {
       <div className="form-group" style={{ marginTop: '16px' }}>
         <textarea className="form-textarea" placeholder="请粘贴NDA文本..." value={text} onChange={(e) => setText(e.target.value)} />
       </div>
-      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL}settings">前往设置</a></> : error}</div>}
+      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL + "settings"}>前往设置</a></> : error}</div>}
       <button className="btn btn-primary" onClick={handleSubmit} disabled={loading} style={{ marginTop: '16px' }}>{loading ? '审查中...' : '开始审查'}</button>
       {loading && <div className="loading"><div className="spinner"></div><span>正在审查...</span></div>}
       {result && (

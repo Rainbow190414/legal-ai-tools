@@ -48,7 +48,7 @@ function LegalDocGen() {
         <label className="form-label">案件信息：</label>
         <textarea className="form-textarea" placeholder="请输入案件信息，包括但不限于：&#10;- 当事人信息（原告/被告姓名、身份证号、联系方式等）&#10;- 案由&#10;- 事实与理由&#10;- 诉讼请求&#10;&#10;信息越详细，生成的文书质量越高。" value={text} onChange={(e) => setText(e.target.value)} />
       </div>
-      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL}settings">前往设置</a></> : error}</div>}
+      {error && <div className="error-message">{error.includes('API Key') ? <>{error} <a href={import.meta.env.BASE_URL + "settings"}>前往设置</a></> : error}</div>}
       <button className="btn btn-primary" onClick={handleSubmit} disabled={loading}>{loading ? '生成中...' : '生成文书'}</button>
       {loading && <div className="loading"><div className="spinner"></div><span>正在生成文书...</span></div>}
       {result && (
