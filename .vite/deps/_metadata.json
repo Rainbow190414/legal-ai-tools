@@ -1,61 +1,73 @@
 {
-  "hash": "027ee801",
+  "hash": "e6c4b25d",
   "configHash": "f86efbbc",
-  "lockfileHash": "afe2fa66",
-  "browserHash": "4671f586",
+  "lockfileHash": "ba489f25",
+  "browserHash": "0d43c796",
   "optimized": {
+    "docx": {
+      "src": "../../node_modules/docx/dist/index.mjs",
+      "file": "docx.js",
+      "fileHash": "b0370bbc",
+      "needsInterop": false
+    },
+    "file-saver": {
+      "src": "../../node_modules/file-saver/dist/FileSaver.min.js",
+      "file": "file-saver.js",
+      "fileHash": "b3647db5",
+      "needsInterop": true
+    },
     "lucide-react": {
       "src": "../../node_modules/lucide-react/dist/esm/lucide-react.mjs",
       "file": "lucide-react.js",
-      "fileHash": "8cbf9948",
+      "fileHash": "dfbd860c",
       "needsInterop": false
     },
     "mammoth": {
       "src": "../../node_modules/mammoth/lib/index.js",
       "file": "mammoth.js",
-      "fileHash": "6364b8a6",
+      "fileHash": "5ccde6ea",
       "needsInterop": true
     },
     "pdfjs-dist": {
       "src": "../../node_modules/pdfjs-dist/build/pdf.mjs",
       "file": "pdfjs-dist.js",
-      "fileHash": "a551ff58",
+      "fileHash": "39cf6683",
       "needsInterop": false
     },
     "react-dom/client": {
       "src": "../../node_modules/react-dom/client.js",
       "file": "react-dom_client.js",
-      "fileHash": "1f4c05f3",
+      "fileHash": "c7775844",
       "needsInterop": true
     },
     "react-markdown": {
       "src": "../../node_modules/react-markdown/index.js",
       "file": "react-markdown.js",
-      "fileHash": "31cd5d13",
+      "fileHash": "a16a4ea7",
       "needsInterop": false
     },
     "react-router-dom": {
       "src": "../../node_modules/react-router-dom/dist/index.mjs",
       "file": "react-router-dom.js",
-      "fileHash": "d054e704",
+      "fileHash": "7b7dc4aa",
       "needsInterop": false
     },
     "react": {
       "src": "../../node_modules/react/index.js",
       "file": "react.js",
-      "fileHash": "7ea50fd2",
+      "fileHash": "9fea54d2",
       "needsInterop": true
     },
     "react/jsx-dev-runtime": {
       "src": "../../node_modules/react/jsx-dev-runtime.js",
       "file": "react_jsx-dev-runtime.js",
-      "fileHash": "f6329804",
+      "fileHash": "e5600c16",
       "needsInterop": true
     },
     "xlsx": {
       "src": "../../node_modules/xlsx/xlsx.mjs",
       "file": "xlsx.js",
-      "fileHash": "8ad8c310",
+      "fileHash": "74323781",
       "needsInterop": false
     }
   },

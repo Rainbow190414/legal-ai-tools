@@ -12,7 +12,6 @@ import MeetingBriefing from './pages/MeetingBriefing'
 import TranscriptOrganizer from './pages/TranscriptOrganizer'
 import Compliance from './pages/Compliance'
 import CannedResponses from './pages/CannedResponses'
-import Settings from './pages/Settings'
 
 // 计算工具
 import InterestCalculator from './pages/InterestCalculator'
@@ -28,6 +27,10 @@ import PdfToImage from './pages/PdfToImage'
 // 案件管理
 import CaseManager from './pages/CaseManager'
 import CaseDetail from './pages/CaseDetail'
+
+// 设置与法律检索
+import Settings from './pages/Settings'
+import LegalSearch from './pages/LegalSearch'
 
 function App() {
   return (
@@ -46,6 +49,7 @@ function App() {
         <Route path="compliance" element={<Compliance />} />
         <Route path="canned-responses" element={<CannedResponses />} />
         <Route path="settings" element={<Settings />} />
+              <Route path="legal-search" element={<LegalSearch />} />
         
         {/* 计算工具 */}
         <Route path="interest-calc" element={<InterestCalculator />} />

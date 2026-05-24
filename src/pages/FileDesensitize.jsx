@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { ArrowLeft, Copy, Check } from 'lucide-react'
+import { ArrowLeft, Copy, Check, FileDown } from 'lucide-react'
+import { exportToWord } from '../utils/wordExport'
 import FileUpload from '../components/FileUpload'
 import MarkdownRenderer from '../components/MarkdownRenderer'
 import DataBridge from '../components/DataBridge'
@@ -126,6 +127,19 @@ function FileDesensitize() {
 
       {result && (
         <div className="result-area">
+        <div className="result-actions">
+          <button 
+            className="download-word-btn"
+            onClick={() => exportToWord({
+              title: '脱敏文件',
+              content: result,
+              filename: 'desensitized_file',
+              metadata: { '生成时间': new Date().toLocaleString('zh-CN') }
+            })}
+          >
+            <FileDown size={16} /> 下载Word文档
+          </button>
+        </div>
           <div className="result-header">
             <h3 className="result-title">脱敏结果</h3>
             <button className="btn btn-outline btn-sm" onClick={handleCopy}>

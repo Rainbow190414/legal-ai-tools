@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "docx": "^9.6.1",
+    "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
     "lucide-react": "^1.16.0",
     "mammoth": "^1.12.0",

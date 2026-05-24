@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { ArrowLeft, Copy, Check } from 'lucide-react'
+import { ArrowLeft, Copy, Check, FileDown } from 'lucide-react'
+import { exportToWord } from '../utils/wordExport'
 import MarkdownRenderer from '../components/MarkdownRenderer'
 import DataBridge from '../components/DataBridge'
 import ResultSaver from '../components/ResultSaver'
@@ -44,6 +45,19 @@ function RiskAssessment() {
       {loading && <div className="loading"><div className="spinner"></div><span>正在评估风险...</span></div>}
       {result && (
         <div className="result-area">
+        <div className="result-actions">
+          <button 
+            className="download-word-btn"
+            onClick={() => exportToWord({
+              title: '风险评估报告',
+              content: result,
+              filename: 'risk_assessment',
+              metadata: { '生成时间': new Date().toLocaleString('zh-CN') }
+            })}
+          >
+            <FileDown size={16} /> 下载Word文档
+          </button>
+        </div>
           <div className="result-header">
             <h3 className="result-title">风险评估报告</h3>
             <button className="btn btn-outline btn-sm" onClick={() => { navigator.clipboard.writeText(result); setCopied(true); setTimeout(() => setCopied(false), 2000) }}>{copied ? <><Check size={14} /> 已复制</> : <><Copy size={14} /> 复制</>}</button>

@@ -5,6 +5,6 @@ export default defineConfig({
   plugins: [react()],
   base: '/legal-ai-tools/',
   build: {
-    outDir: 'dist'
+    outDir: 'docs'
   }
 })

@@ -141,6 +141,13 @@ const aiTools = [
     color: '#4a5568',
     path: '/canned-responses'
   },
+  {
+    title: '法律检索',
+    description: '法律法规与案例智能检索，支持AI辅助分析',
+    icon: Scale,
+    color: '#8b5cf6',
+    path: '/legal-search'
+  },
 ]
 
 function Home() {

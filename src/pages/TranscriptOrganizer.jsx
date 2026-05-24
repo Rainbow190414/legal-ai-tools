@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { ArrowLeft, Copy, Check } from 'lucide-react'
+import { ArrowLeft, Copy, Check, FileDown } from 'lucide-react'
+import { exportToWord } from '../utils/wordExport'
 import FileUpload from '../components/FileUpload'
 import MarkdownRenderer from '../components/MarkdownRenderer'
 import DataBridge from '../components/DataBridge'
@@ -59,6 +60,19 @@ function TranscriptOrganizer() {
       {loading && <div className="loading"><div className="spinner"></div><span>正在整理...</span></div>}
       {result && (
         <div className="result-area">
+        <div className="result-actions">
+          <button 
+            className="download-word-btn"
+            onClick={() => exportToWord({
+              title: '笔录整理报告',
+              content: result,
+              filename: 'transcript',
+              metadata: { '生成时间': new Date().toLocaleString('zh-CN') }
+            })}
+          >
+            <FileDown size={16} /> 下载Word文档
+          </button>
+        </div>
           <div className="result-header">
             <h3 className="result-title">整理结果</h3>
             <button className="btn btn-outline btn-sm" onClick={() => { navigator.clipboard.writeText(result); setCopied(true); setTimeout(() => setCopied(false), 2000) }}>{copied ? <><Check size={14} /> 已复制</> : <><Copy size={14} /> 复制</>}</button>
