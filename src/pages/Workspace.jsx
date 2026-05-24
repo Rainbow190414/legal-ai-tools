@@ -131,7 +131,24 @@ function Workspace() {
     }
 
     const userText = inputText.trim()
-    const fullContent = userText + fileContentText
+    // 构建案件上下文
+    let caseContext = ''
+    if (currentCase) {
+      caseContext = '\n\n【当前案件信息】\n'
+      caseContext += `案件名称：${currentCase.name}\n`
+      caseContext += `案件类型：${currentCase.type}\n`
+      if (currentCase.parties) caseContext += `当事人：${currentCase.parties}\n`
+      if (currentCase.description) caseContext += `案件描述：${currentCase.description}\n`
+      if (currentCase.notes && currentCase.notes.length > 0) {
+        caseContext += '\n【进展记录】\n'
+        currentCase.notes.forEach((note, i) => {
+          const date = new Date(note.createdAt).toLocaleDateString('zh-CN')
+          caseContext += `${i + 1}. [${date}] ${note.content}\n`
+        })
+      }
+    }
+
+    const fullContent = userText + fileContentText + caseContext
 
     const userMessage = { id: Date.now(), role: 'user', content: userText || `请分析上传的${uploadedFiles.length}个文件`, timestamp: new Date() }
     setMessages(prev => [...prev, userMessage])
