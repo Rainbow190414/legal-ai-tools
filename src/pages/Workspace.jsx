@@ -404,10 +404,10 @@ function Workspace() {
               onChange={handleFileUpload}
               style={{ display: 'none' }}
             />
-            <textarea className="chat-input" placeholder="描述您的需求，或直接上传文件..." value={inputText} onChange={(e) => setInputText(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSendMessage() } }} disabled={isLoading} rows={3} />
+            <textarea className="chat-input" placeholder="描述您的需求，或直接上传文件..." value={inputText} onChange={(e) => setInputText(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && e.shiftKey) { e.preventDefault(); handleSendMessage() } }} disabled={isLoading} rows={3} />
             <button className="chat-send-btn" onClick={handleSendMessage} disabled={isLoading}>{isLoading ? <div className="spinner-small" /> : <Send size={18} />}</button>
           </div>
-          <div className="chat-input-hint">按 Enter 发送，Shift + Enter 换行 | 支持上传 PDF、Word、Excel、图片、TXT 等文件</div>
+          <div className="chat-input-hint">按 Shift + Enter 发送，Enter 换行 | 支持上传 PDF、Word、Excel、图片、TXT 等文件</div>
         </div>
       </main>
 
