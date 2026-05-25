@@ -221,6 +221,7 @@ function Workspace() {
     const fullContent = userText + fileContentText + caseContext + refFilesContent
 
     const userMessage = { id: Date.now(), role: 'user', content: userText || `请分析上传的${uploadedFiles.length}个文件`, timestamp: new Date() }
+    let aiMessage = null
     setMessages(prev => [...prev, userMessage])
     setInputText('')
     setUploadedFiles([])
@@ -228,14 +229,25 @@ function Workspace() {
 
     try {
       const systemPrompt = selectedTool ? (prompts[selectedTool.promptKey] || '') : '你是一位专业的法律AI助手，请根据用户提供的内容进行分析。'
+      console.log('调用AI, prompt长度:', systemPrompt.length, 'content长度:', fullContent.length)
       const response = await chatWithKimi([{ role: 'system', content: systemPrompt }, { role: 'user', content: fullContent }])
-      const aiMessage = { id: Date.now() + 1, role: 'assistant', content: response, timestamp: new Date(), toolId: selectedTool?.id, toolName: selectedTool?.name }
+      console.log('AI响应长度:', response?.length)
+      aiMessage = { id: Date.now() + 1, role: 'assistant', content: response, timestamp: new Date(), toolId: selectedTool?.id, toolName: selectedTool?.name }
       setMessages(prev => [...prev, aiMessage])
-      if (currentCase) { await db.addSessionMessage(currentCase.id, userMessage); await db.addSessionMessage(currentCase.id, aiMessage) }
     } catch (error) {
+      console.error('handleSendMessage 错误:', error.message, error.stack)
       setMessages(prev => [...prev, { id: Date.now() + 1, role: 'error', content: '处理出错，请重试', timestamp: new Date() }])
     } finally {
       setIsLoading(false)
+    }
+    // 保存会话消息（不影响主流程）
+    if (currentCase) {
+      try {
+        await db.addSessionMessage(currentCase.id, userMessage)
+        await db.addSessionMessage(currentCase.id, aiMessage)
+      } catch (err) {
+        console.error('会话保存失败:', err)
+      }
     }
   }
 
