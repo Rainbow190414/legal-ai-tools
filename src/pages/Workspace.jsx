@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import {
   Scale, Settings, FileText, Search, Calculator, FileSearch,
   Shield, Briefcase, Gavel, ClipboardList, MessageSquare,
-  FolderOpen, Plus, ChevronRight, Send, Trash2, Sparkles,
+  FolderOpen, Plus, ChevronRight, Send, Trash2, Save, Sparkles,
   LayoutGrid, FileDown, Bot, BookOpen, PenTool, AlertTriangle, MailPlus, FileOutput,
   Upload, X, File
 } from 'lucide-react'
@@ -47,7 +47,7 @@ const FILE_TOOLS = [
 
 function Workspace() {
   const navigate = useNavigate()
-  const { cases, currentCase, setCurrentCase: selectCase, addCase: createCase, removeCase: deleteCase, loading } = useCase()
+  const { cases, currentCase, selectCase, addCase: createCase, removeCase: deleteCase, loading } = useCase()
 
   const [showCreateCase, setShowCreateCase] = useState(false)
   const [newCase, setNewCase] = useState({ name: '', type: '民事案件', description: '', parties: '' })
@@ -58,10 +58,26 @@ function Workspace() {
   const [inputText, setInputText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [uploadedFiles, setUploadedFiles] = useState([])
+  const [caseFiles, setCaseFiles] = useState({})
+  const [selectedRefFiles, setSelectedRefFiles] = useState([])
   const messagesEndRef = useRef(null)
   const fileInputRef = useRef(null)
 
   useEffect(() => { messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages])
+
+  useEffect(() => {
+    const loadAllCaseFiles = async () => {
+      const filesMap = {}
+      for (const c of cases) {
+        try {
+          const files = await db.getCaseFiles(c.id)
+          filesMap[c.id] = files
+        } catch (err) { console.error('加载案件文件失败:', err) }
+      }
+      setCaseFiles(filesMap)
+    }
+    if (cases.length > 0) loadAllCaseFiles()
+  }, [cases])
 
   const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' })
 
@@ -139,6 +155,7 @@ function Workspace() {
       caseContext += `案件类型：${currentCase.type}\n`
       if (currentCase.parties) caseContext += `当事人：${currentCase.parties}\n`
       if (currentCase.description) caseContext += `案件描述：${currentCase.description}\n`
+      if (currentCase.summary) caseContext += `\n【案件摘要】\n${currentCase.summary}\n`
       if (currentCase.notes && currentCase.notes.length > 0) {
         caseContext += '\n【进展记录】\n'
         currentCase.notes.forEach((note, i) => {
@@ -148,7 +165,60 @@ function Workspace() {
       }
     }
 
-    const fullContent = userText + fileContentText + caseContext
+    // 引用文件内容
+    let refFilesContent = ''
+    if (selectedRefFiles.length > 0 && caseFiles[currentCase?.id]) {
+      const selectedFiles = caseFiles[currentCase.id].filter(f => selectedRefFiles.includes(f.id))
+      if (selectedFiles.length > 0) {
+        refFilesContent = '\n\n【引用案件文件】\n'
+        for (const f of selectedFiles) {
+          refFilesContent += `=== ${f.name} ===\n`
+          if (f.data) {
+            try {
+              const ext = (f.name || '').split('.').pop().toLowerCase()
+              let text = ''
+              if (['docx', 'xlsx', 'pptx'].includes(ext)) {
+                // 直接传 ArrayBuffer 给 JSZip
+                const { default: JSZip } = await import('jszip')
+                const zip = await JSZip.loadAsync(f.data)
+                const targetFile = ext === 'docx' ? 'word/document.xml' : ext === 'xlsx' ? 'xl/sharedStrings.xml' : 'ppt/slides/slide1.xml'
+                let xmlFile = zip.file(targetFile)
+                if (!xmlFile) {
+                  const allFiles = Object.keys(zip.files)
+                  const matched = allFiles.find(fn => fn.includes('document.xml') || fn.includes('sharedStrings.xml') || fn.includes('slide'))
+                  if (matched) xmlFile = zip.file(matched)
+                }
+                if (xmlFile) {
+                  const xml = await xmlFile.async('text')
+                  const matches = xml.match(/<w:t[^>]*>([^<]+)<\/w:t>/g) || xml.match(/<a:t[^>]*>([^<]+)<\/a:t>/g) || xml.match(/<t[^>]*>([^<]+)<\/t>/g)
+                  text = matches ? matches.map(m => m.replace(/<\/?[wa]?:t[^>]*>/g, '')).join('') : xml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+                }
+              } else if (ext === 'pdf') {
+                const bytes = new Uint8Array(f.data)
+                const decoder = new TextDecoder('utf-8', { fatal: false })
+                text = decoder.decode(bytes)
+              } else {
+                // 文本文件
+                const decoder = new TextDecoder('utf-8', { fatal: false })
+                text = decoder.decode(f.data)
+              }
+              if (!text || !text.trim()) {
+                refFilesContent += `[文件 ${f.name}: 无法提取文本]\n`
+              } else {
+                const truncated = text.length > 8000 ? text.slice(0, 8000) + '\n...(文件过长，已截断)' : text
+                refFilesContent += truncated + '\n'
+              }
+            } catch (err) {
+              refFilesContent += `[文件 ${f.name}: 读取失败 - ${err.message}]\n`
+            }
+          } else {
+            refFilesContent += `[文件数据不可用]\n`
+          }
+        }
+      }
+    }
+
+    const fullContent = userText + fileContentText + caseContext + refFilesContent
 
     const userMessage = { id: Date.now(), role: 'user', content: userText || `请分析上传的${uploadedFiles.length}个文件`, timestamp: new Date() }
     setMessages(prev => [...prev, userMessage])
@@ -174,6 +244,23 @@ function Workspace() {
     try { await exportToWord({ title: `${message.toolName || 'AI分析'}结果`, content: message.content, metadata: { tool: message.toolName, timestamp: message.timestamp, caseName: currentCase?.name } }) } catch (error) { alert('导出失败') }
   }
 
+  // 保存AI回复到案件文件
+  const handleSaveToCase = async (message) => {
+    if (!message || !currentCase) return
+    try {
+      const fileName = `${message.toolName || 'AI分析'}_${new Date().toLocaleDateString('zh-CN').replace(/\//g, '-')}.txt`
+      const blob = new Blob([message.content], { type: 'text/plain' })
+      const file = new File([blob], fileName, { type: 'text/plain' })
+      await db.addCaseFile(currentCase.id, file)
+      const files = await db.getCaseFiles(currentCase.id)
+      setCaseFiles(prev => ({ ...prev, [currentCase.id]: files }))
+      alert('已保存到案件文件')
+    } catch (error) {
+      console.error('保存失败:', error)
+      alert('保存失败，请重试')
+    }
+  }
+
   const renderMessage = (message) => {
     const isUser = message.role === 'user'
     const isSystem = message.role === 'system'
@@ -183,7 +270,7 @@ function Workspace() {
         <div className="message-content">
           <div className="message-header"><span className="message-role">{isUser ? '我' : isSystem ? '系统' : 'AI助手'}</span><span className="message-time">{message.timestamp?.toLocaleTimeString()}</span></div>
           <div className="message-body">{message.content}</div>
-          {message.role === 'assistant' && <div className="message-actions"><button className="message-action-btn" onClick={() => handleExportWord(message)}><FileDown size={14} />导出Word</button></div>}
+          {message.role === 'assistant' && <div className="message-actions"><button className="message-action-btn" onClick={() => handleExportWord(message)}><FileDown size={14} />导出Word</button>{currentCase && <button className="message-action-btn" onClick={() => handleSaveToCase(message)} title="保存到案件文件"><Save size={14} />保存到案件</button>}</div>}
         </div>
       </div>
     )
@@ -222,7 +309,7 @@ function Workspace() {
             <div className="case-list-in-panel">
               {cases.map(c => (
                 <div key={c.id} className={`case-item-in-panel ${currentCase?.id === c.id ? 'active' : ''}`}>
-                  <div className="case-item-main" onClick={() => selectCase(c.id)}>
+                  <div className="case-item-main" onClick={() => { selectCase(c.id); setSelectedRefFiles([]) }}>
                     <div className="case-item-top"><span className="case-item-name">{c.name}</span><span className={`case-status-mini ${getStatusClass(c.status)}`}>{c.status}</span></div>
                     <div className="case-item-meta"><span className="case-type-mini">{c.type}</span><span className="case-date-mini">{formatDate(c.createdAt)}</span></div>
                     {c.parties && <div className="case-parties-mini">{c.parties}</div>}
@@ -235,6 +322,38 @@ function Workspace() {
               ))}
             </div>}
         </div>
+
+        {currentCase && caseFiles[currentCase.id] && caseFiles[currentCase.id].length > 0 && (
+          <div className="panel-footer" style={{ background: '#f8fafc', borderTop: '1px solid #e2e8f0' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+              <span style={{ fontSize: 12, fontWeight: 600, color: '#475569' }}>📎 引用文件</span>
+              <button
+                style={{ fontSize: 11, padding: '2px 8px', borderRadius: 4, border: '1px solid #e2e8f0', background: '#fff', color: '#3b82f6', cursor: 'pointer' }}
+                onClick={() => {
+                  const allIds = (caseFiles[currentCase.id] || []).map(f => f.id);
+                  setSelectedRefFiles(selectedRefFiles.length === allIds.length ? [] : allIds);
+                }}
+              >
+                {selectedRefFiles.length === (caseFiles[currentCase.id] || []).length ? '取消全选' : '全选'}
+              </button>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 2, maxHeight: 120, overflowY: 'auto' }}>
+              {(caseFiles[currentCase.id] || []).map(f => (
+                <label key={f.id} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#334155', cursor: 'pointer', padding: '3px 0' }}>
+                  <input
+                    type="checkbox"
+                    checked={selectedRefFiles.includes(f.id)}
+                    onChange={() => {
+                      setSelectedRefFiles(prev => prev.includes(f.id) ? prev.filter(id => id !== f.id) : [...prev, f.id]);
+                    }}
+                    style={{ margin: 0 }}
+                  />
+                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{f.name}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
       </aside>
 
       {/* 中间：对话工作台 */}

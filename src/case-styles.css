@@ -790,3 +790,40 @@
   background: #fee2e2;
   color: #ef4444;
 }
+
+/* 删除确认按钮 */
+.confirm-delete-mini {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.confirm-delete-mini button {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.confirm-delete-mini .del-yes {
+  background: #ef4444;
+  color: white;
+}
+
+.confirm-delete-mini .del-yes:hover {
+  background: #dc2626;
+}
+
+.confirm-delete-mini .del-no {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.confirm-delete-mini .del-no:hover {
+  background: #e2e8f0;
+}

@@ -226,7 +226,7 @@ function Home() {
       <div className="home-section">
         <div className="home-section-header">
           <h2 className="home-section-title">🤖 AI 智能工具</h2>
-          <p className="home-section-desc">基于Kimi大模型，需要配置API Key</p>
+          <p className="home-section-desc">基于AI大模型，需要配置API Key</p>
         </div>
         <div className="home-grid">
           {aiTools.map((tool) => {

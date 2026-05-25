@@ -41,7 +41,10 @@ function getApiProvider() {
 }
 
 function getApiKey() {
-  return localStorage.getItem('kimi_api_key') || '';
+  const provider = getApiProvider();
+    const key = localStorage.getItem("api_key_" + provider);
+  if (key) return key;
+  return localStorage.getItem("kimi_api_key") || "";
 }
 
 function getModel() {

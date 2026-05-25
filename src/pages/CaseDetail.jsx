@@ -84,11 +84,18 @@ function CaseDetail() {
     const files = Array.from(e.target.files)
     if (files.length === 0) return
     setUploading(true)
+    const existingNames = new Set((caseFiles || []).map(f => f.name))
+    let skipped = 0, added = 0
     try {
       for (const file of files) {
+        if (existingNames.has(file.name)) { skipped++; continue }
         await db.addCaseFile(id, file)
+        added++
       }
       await loadCaseFiles()
+      const msg = added > 0 ? `成功上传 ${added} 个文件` : ''
+      if (skipped > 0) alert((msg ? msg + '，' : '') + `跳过 ${skipped} 个重复文件`)
+      else if (msg) alert(msg)
     } catch (err) {
       alert('文件上传失败: ' + err.message)
     } finally {
@@ -101,15 +108,18 @@ function CaseDetail() {
     const files = Array.from(e.target.files)
     if (files.length === 0) return
     setUploading(true)
+    const existingNames = new Set((caseFiles || []).map(f => f.name))
     try {
-      let count = 0
+      let added = 0, skipped = 0
       for (const file of files) {
         const relativePath = file.webkitRelativePath || file.name
+        if (existingNames.has(file.name)) { skipped++; continue }
         await db.addCaseFile(id, file, relativePath)
-        count++
+        added++
       }
       await loadCaseFiles()
-      alert(`成功上传 ${count} 个文件`)
+      let msg = `成功上传 ${added} 个文件` + (skipped > 0 ? `，跳过 ${skipped} 个重复文件` : '')
+      alert(msg)
     } catch (err) {
       alert('文件夹上传失败: ' + err.message)
     } finally {
@@ -120,7 +130,7 @@ function CaseDetail() {
 
   const handleDeleteFile = async (fileId) => {
     if (!confirm('确定要删除这个文件吗？')) return
-    await db.deleteCaseFile(fileId)
+    await db.deleteCaseFile(fileId, id)
     await loadCaseFiles()
   }
 

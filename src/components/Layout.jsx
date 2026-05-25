@@ -35,7 +35,7 @@ function Layout() {
         <Outlet />
       </main>
       <footer className="footer">
-        <p>法律AI工具 - 基于Kimi API构建</p>
+        <p>法律AI工具 - 基于AI大模型构建</p>
       </footer>
     </div>
   )

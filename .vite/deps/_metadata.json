@@ -1,73 +1,79 @@
 {
-  "hash": "e6c4b25d",
+  "hash": "6fa3b2f1",
   "configHash": "f86efbbc",
-  "lockfileHash": "ba489f25",
-  "browserHash": "0d43c796",
+  "lockfileHash": "43146af7",
+  "browserHash": "b7cf8811",
   "optimized": {
     "docx": {
       "src": "../../node_modules/docx/dist/index.mjs",
       "file": "docx.js",
-      "fileHash": "b0370bbc",
+      "fileHash": "2df99101",
       "needsInterop": false
     },
     "file-saver": {
       "src": "../../node_modules/file-saver/dist/FileSaver.min.js",
       "file": "file-saver.js",
-      "fileHash": "b3647db5",
+      "fileHash": "e2114f4b",
+      "needsInterop": true
+    },
+    "jszip": {
+      "src": "../../node_modules/jszip/dist/jszip.min.js",
+      "file": "jszip.js",
+      "fileHash": "831fa6fa",
       "needsInterop": true
     },
     "lucide-react": {
       "src": "../../node_modules/lucide-react/dist/esm/lucide-react.mjs",
       "file": "lucide-react.js",
-      "fileHash": "dfbd860c",
+      "fileHash": "733a9f72",
       "needsInterop": false
     },
     "mammoth": {
       "src": "../../node_modules/mammoth/lib/index.js",
       "file": "mammoth.js",
-      "fileHash": "5ccde6ea",
+      "fileHash": "3a50b6e2",
       "needsInterop": true
     },
     "pdfjs-dist": {
       "src": "../../node_modules/pdfjs-dist/build/pdf.mjs",
       "file": "pdfjs-dist.js",
-      "fileHash": "39cf6683",
+      "fileHash": "39e20f05",
       "needsInterop": false
     },
     "react-dom/client": {
       "src": "../../node_modules/react-dom/client.js",
       "file": "react-dom_client.js",
-      "fileHash": "c7775844",
+      "fileHash": "de29c716",
       "needsInterop": true
     },
     "react-markdown": {
       "src": "../../node_modules/react-markdown/index.js",
       "file": "react-markdown.js",
-      "fileHash": "a16a4ea7",
+      "fileHash": "fed465c0",
       "needsInterop": false
     },
     "react-router-dom": {
       "src": "../../node_modules/react-router-dom/dist/index.mjs",
       "file": "react-router-dom.js",
-      "fileHash": "7b7dc4aa",
+      "fileHash": "0aea317c",
       "needsInterop": false
     },
     "react": {
       "src": "../../node_modules/react/index.js",
       "file": "react.js",
-      "fileHash": "9fea54d2",
+      "fileHash": "1f929188",
       "needsInterop": true
     },
     "react/jsx-dev-runtime": {
       "src": "../../node_modules/react/jsx-dev-runtime.js",
       "file": "react_jsx-dev-runtime.js",
-      "fileHash": "e5600c16",
+      "fileHash": "5df39581",
       "needsInterop": true
     },
     "xlsx": {
       "src": "../../node_modules/xlsx/xlsx.mjs",
       "file": "xlsx.js",
-      "fileHash": "74323781",
+      "fileHash": "85a6d9f3",
       "needsInterop": false
     }
   },

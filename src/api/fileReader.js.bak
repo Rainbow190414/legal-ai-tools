@@ -1,0 +1,109 @@
+// 读取文件内容，支持多种格式
+export async function readFileContent(file) {
+  const maxSize = 20 * 1024 * 1024 // 20MB
+  if (file.size > maxSize) {
+    throw new Error(`文件 "${file.name}" 过大（${(file.size / 1024 / 1024).toFixed(1)}MB），请上传20MB以内的文件`)
+  }
+
+  const ext = file.name.split('.').pop().toLowerCase()
+  const textExts = ['txt', 'md', 'json', 'csv', 'xml', 'html', 'htm', 'js', 'jsx', 'ts', 'css', 'yaml', 'yml', 'log', 'ini', 'conf', 'py', 'java', 'c', 'cpp', 'h', 'sh', 'bat', 'sql', 'rtf']
+  const imageExts = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp', 'svg']
+
+  // 文本文件直接读取
+  if (textExts.includes(ext) || file.type.startsWith('text/')) {
+    return file.text()
+  }
+
+  // 图片文件：转 base64 描述
+  if (imageExts.includes(ext) || file.type.startsWith('image/')) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => {
+        resolve(`[图片文件: ${file.name}]\n文件大小: ${(file.size / 1024).toFixed(1)}KB\n类型: ${file.type}\n\n注意：图片内容需要通过OCR识别，请描述图片中的文字内容。`)
+      }
+      reader.onerror = () => reject(new Error('图片读取失败'))
+      reader.readAsDataURL(file)
+    })
+  }
+
+  // PDF、Word、Excel 等二进制文件
+  if (ext === 'pdf' || ext === 'doc' || ext === 'docx' || ext === 'xls' || ext === 'xlsx' || ext === 'ppt' || ext === 'pptx') {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => {
+        const arrayBuffer = reader.result
+        const bytes = new Uint8Array(arrayBuffer)
+        // 尝试提取文本内容
+        const text = extractTextFromBinary(bytes, ext)
+        resolve(text || `[二进制文件: ${file.name}]\n文件大小: ${(file.size / 1024).toFixed(1)}KB\n类型: ${file.type || ext.toUpperCase()}\n\n注意：此文件为${ext.toUpperCase()}格式，部分内容可能无法完整提取。请根据文件名和上下文补充相关信息。`)
+      }
+      reader.onerror = () => reject(new Error('文件读取失败'))
+      reader.readAsArrayBuffer(file)
+    })
+  }
+
+  // 其他文件尝试作为文本读取
+  return file.text().catch(() => {
+    throw new Error(`不支持的文件格式: .${ext}，请上传 txt、pdf、word、excel、图片等文件`)
+  })
+}
+
+// 从二进制数据中提取文本（简单实现）
+export function extractTextFromBinary(bytes, ext) {
+  try {
+    const decoder = new TextDecoder('utf-8', { fatal: false })
+    // 对于 docx/xlsx 等 Office Open XML 格式，提取 XML 中的文本
+    if (['docx', 'xlsx', 'pptx'].includes(ext)) {
+      const text = decoder.decode(bytes)
+      const textMatches = text.match(/<w:t[^>]*>([^<]+)<\/w:t>/g)
+      if (textMatches && textMatches.length > 0) {
+        return textMatches.map(m => m.replace(/<\/?w:t[^>]*>/g, '')).join('\n')
+      }
+    }
+    // 对于 pdf，提取可见文本
+    if (ext === 'pdf') {
+      const text = decoder.decode(bytes)
+      // 简单提取 PDF 中的文本流
+      const streams = text.match(/stream\r?\n([\s\S]*?)\r?\nendstream/g)
+      if (streams) {
+        let extracted = ''
+        for (const stream of streams) {
+          const content = stream.replace(/stream\r?\n/, '').replace(/\r?\nendstream/, '')
+          const decoded = decoder.decode(new Uint8Array(content.split('').map(c => c.charCodeAt(0))))
+          // 过滤可读文本
+          const readable = decoded.replace(/[^\u4e00-\u9fa5a-zA-Z0-9\s.,;:!?()（）、，。；：！？""''【】《》\-—]/g, ' ').trim()
+          if (readable.length > 10) extracted += readable + '\n'
+        }
+        if (extracted.trim()) return extracted.trim()
+      }
+    }
+    // 对于 doc/xls 等旧格式
+    if (['doc', 'xls', 'ppt'].includes(ext)) {
+      const text = decoder.decode(bytes)
+      const readable = text.replace(/[^\u4e00-\u9fa5a-zA-Z0-9\s.,;:!?()（）、，。；：！？""''【】《》\-—]/g, ' ').trim()
+      if (readable.length > 20) return readable
+    }
+    return null
+  } catch (e) {
+    return null
+  }
+}
+
+// 递归读取文件夹中的所有文件
+export async function readFolderFiles(fileHandle) {
+  const files = []
+  await traverseFolder(fileHandle, '', files)
+  return files
+}
+
+async function traverseFolder(handle, path, files) {
+  for await (const entry of handle.values()) {
+    const entryPath = path ? `${path}/${entry.name}` : entry.name
+    if (entry.kind === 'file') {
+      const file = await entry.getFile()
+      files.push({ file, path: entryPath })
+    } else if (entry.kind === 'directory') {
+      await traverseFolder(entry, entryPath, files)
+    }
+  }
+}
